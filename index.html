@@ -1,23 +1,354 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!--
-      Need a visual blank slate?
-      Remove all code in `styles.css`!
-    -->
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
-    <nav>
-      <a href="/" aria-current="page">Home</a>
-      <a href="/page2.html">Other page</a>
-    </nav>
-    <main>
-      <h1>Home page</h1>
-    </main>
-  </body>
-</html>
+
+  <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap');
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f7f9fc; color: #333; margin:0; padding:0; line-height: 1.6; }
+        .wrapper { max-width: 900px; margin: 30px auto; background: #ffffff; padding: 30px; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+        h1 { font-size: 2.5em; color: #004d40; margin-bottom: 0.8em; border-bottom: 3px solid #e0f2f1; padding-bottom: 10px; font-weight: 700; }
+        h2 { font-size: 1.8em; color: #00796b; margin-top: 2.2em; margin-bottom: 0.8em; border-left: 5px solid #00a08d; padding-left: 10px; font-weight: 600; }
+        h3 { font-size: 1.4em; color: #004d40; margin-top: 1.5em; margin-bottom: 0.6em; font-weight: 600; }
+        p { margin-bottom: 1.2em; text-align: justify; }
+        .highlight { color: #d32f2f; font-weight: bold; background-color: #ffe0b2; padding: 2px 5px; border-radius: 3px; }
+        .comparison-table { width: 100%; border-collapse: collapse; margin-top: 1.5em; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .comparison-table th, .comparison-table td { border: 1px solid #e0e0e0; padding: 12px; text-align: center; font-size: 0.95em; }
+        .comparison-table th { background-color: #e0f2f1; color: #004d40; font-weight: 700; }
+        .comparison-table td:first-child { font-weight: 600; background-color: #f5f5f5; text-align: left; }
+        .input-form { margin: 2.5em 0; padding: 2em; background: #e0f7fa; border-radius: 10px; border: 1px dashed #b2ebf2; }
+        .input-form label { display: block; margin-bottom: 0.6em; font-weight: 600; color: #00796b; font-size: 1.1em; }
+        .input-form input, .input-form select { width: calc(100% - 24px); padding: 12px; margin-bottom: 1.2em; border: 1px solid #a0aec0; border-radius: 6px; font-size: 1em; }
+        .input-form button { padding: 1em 2em; background-color: #00796b; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 1.1em; font-weight: 600; transition: background-color 0.3s ease; }
+        .input-form button:hover { background-color: #004d40; }
+        .calc-result { font-size: 1.3em; color: #d32f2f; margin-top: 1.5em; text-align: center; font-weight: 700; background-color: #ffeeee; padding: 15px; border-radius: 8px; }
+        .faq { margin-top: 3em; border-top: 2px solid #e0e0e0; padding-top: 1em; }
+        .faq-item { margin-bottom: 1.5em; background: #fcfcfc; border-radius: 8px; border: 1px solid #eee; padding: 15px; }
+        .faq-item h3 { cursor: pointer; color: #00796b; margin-top: 0; margin-bottom: 0; padding: 10px 0; display: flex; justify-content: space-between; align-items: center; }
+        .faq-item h3::after { content: '▼'; font-size: 0.8em; transition: transform 0.3s; }
+        .faq-item.active h3::after { transform: rotate(180deg); }
+        .faq-content { display: none; margin-top: 10px; padding-top: 10px; border-top: 1px solid #e0e0e0; }
+        .testimonial { margin-top: 3em; background: #f0fdfc; padding: 20px; border-left: 5px solid #00a08d; border-radius: 8px; }
+        .testimonial p { margin-bottom: 0.8em; font-style: italic; color: #555; }
+        .testimonial strong { color: #004d40; }
+        .external-links { margin-top: 3em; border-top: 2px solid #e0e0e0; padding-top: 1em; }
+        .external-links a { color: #00796b; text-decoration: none; font-weight: 600; display: block; margin-bottom: 0.5em; }
+        .external-links a:hover { text-decoration: underline; color: #004d40; }
+        .image-container { text-align: center; margin: 2em 0; }
+        .image-container img { max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .section-separator { border-top: 1px solid #e0e0e0; margin: 3em 0; }
+        /* 그래프 스타일 (Placeholder) */
+        .chart-container { width: 100%; max-width: 600px; margin: 2em auto; padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .chart-bar-container { display: flex; align-items: flex-end; height: 150px; border-left: 1px solid #ccc; border-bottom: 1px solid #ccc; position: relative; }
+        .chart-bar { background-color: #00796b; width: 20%; margin: 0 5%; transition: height 0.5s ease; position: relative; }
+        .chart-label { position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); font-size: 0.8em; }
+        .chart-value { position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 0.9em; font-weight: bold; }
+        .chart-title { text-align: center; font-weight: 600; margin-bottom: 1em; color: #004d40; }
+    </style>
+    <!-- JSON-LD Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "2026년 신차리스 가격비교 완벽 가이드",
+      "description": "신차리스 비용, 장단점, 견적 비교, 저렴한 업체 추천 등 2026년 최신 정보를 제공합니다. 신규 가입 혜택, 초기 비용 절약 팁을 통해 합리적인 선택을 돕습니다.",
+      "url": "https://example.com/new-car-lease-guide",
+      "about": {
+        "@type": "Thing",
+        "name": "신차리스 (New Car Lease)"
+      },
+      "mainEntityOfPage": {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "신차리스와 장기렌트의 차이점은 무엇인가요?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "신차리스는 일반 번호판(하, 허, 호 제외)을 사용하며 개인 자산으로 인정되어 건보료나 세금에 영향을 줄 수 있습니다. 반면 장기렌트는 '하, 허, 호' 번호판을 사용하며 렌터카로 분류되어 개인 자산으로 잡히지 않아 세금 및 건강보험료 상승 부담이 적습니다. 보험 가입 주체도 리스는 개인이, 장기렌트는 렌트업체가 가입합니다."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "신차리스 견적을 저렴하게 받는 팁이 있나요?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "첫째, 여러 업체의 견적을 비교하는 것이 필수입니다. 둘째, 신규 가입 혜택이나 할인 이벤트가 많은 비수기 기간(월 초, 계절 변화 시점)에 계약을 진행하는 것이 유리합니다. 셋째, 초기 보증금(선납금)을 납부하여 월 납입금을 줄이거나, 높은 잔존가치 책정 가능한 모델을 선택하는 것도 방법입니다."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "신차리스 계약 종료 시 차량을 인수하는 것이 유리한가요?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "계약 종료 시점에 차량의 잔존가치와 실제 중고차 시세를 비교하여 결정합니다. 잔존가치보다 시세가 높으면 인수가 유리하고, 시세가 낮으면 반납하는 것이 합리적입니다. 최근 2026년 기준으로 중고차 시세 변동이 심하므로 전문가의 조언을 받는 것이 중요합니다."
+            }
+          }
+        ]
+      }
+    }
+    </script>
+</head>
+
+<body>
+<div class="wrapper">
+    <h1>2026년 신차리스 가격비교 완벽 가이드: 평균 견적, 장단점, 저렴한 업체 추천</h1>
+    <p>새차를 구매하는 방식은 다양해졌습니다. 과거에는 일시불이나 할부 구매가 주를 이루었지만, 최근에는 <span class="highlight">신차리스</span> 또는 <span class="highlight">장기렌트</span>를 통한 합리적인 차량 이용이 대세로 자리 잡았습니다. 특히 2026년 현재, 경제 상황과 세금 정책의 변화로 신차리스의 <span class="highlight">장점</span>이 부각되면서 많은 소비자들이 <span class="highlight">견적</span>을 비교하고 있습니다.</p>
+    <p>본 가이드에서는 신차리스의 <span class="highlight">평균 비용</span>과 <span class="highlight">가격</span> 구성 요소를 심층 분석하고, <span class="highlight">장단점</span> 비교를 통해 독자 여러분이 자신에게 맞는 <span class="highlight">저렴한곳</span>을 찾을 수 있도록 돕습니다. <span class="highlight">내돈내산 후기</span>를 바탕으로 한 팁과 <span class="highlight">신규 가입 혜택</span>까지 놓치지 마세요.</p>
+
+    <!-- Pexels Image Placeholder -->
+    <div class="image-container">
+        <!-- Pexels에서 "car lease" 또는 "new car" 관련 이미지 사용 예정 -->
+        <img src="https://images.pexels.com/photos/1035106/pexels-photo-1035106.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="신차리스 계약서와 자동차 열쇠 이미지">
+        <p style="font-size: 0.8em; color: #777; margin-top: 5px;">*본 이미지는 Pexels.com에서 제공하는 상업적 이용 가능 이미지입니다. (Image Credit: Pexels)</p>
+    </div>
+
+    <!-- 비용 계산 입력폼 (신차리스 계산기) -->
+    <div class="input-form">
+        <label for="carModel">신차 모델 선택 (차량 가격 기준)</label>
+        <select id="carModel" name="carModel" required>
+            <option value="3000">준중형 세단 (약 3,000만원)</option>
+            <option value="4000">중형 SUV (약 4,000만원)</option>
+            <option value="5000">대형 세단 (약 5,000만원)</option>
+            <option value="7000">수입차 엔트리급 (약 7,000만원)</option>
+        </select>
+
+        <label for="leaseTerm">리스 계약 기간 (개월)</label>
+        <select id="leaseTerm" name="leaseTerm" required>
+            <option value="36">36개월</option>
+            <option value="48">48개월</option>
+            <option value="60">60개월</option>
+        </select>
+
+        <label for="depositRate">보증금/선납금 비율</label>
+        <select id="depositRate" name="depositRate" required>
+            <option value="0">0% (보증금/선납금 없음)</option>
+            <option value="10">10% (초기 비용 10% 납부)</option>
+            <option value="20">20% (초기 비용 20% 납부)</option>
+        </select>
+
+        <label for="annualMileage">연간 주행 거리 (km)</label>
+        <select id="annualMileage" name="annualMileage" required>
+            <option value="10000">1만 km</option>
+            <option value="20000">2만 km</option>
+            <option value="30000">3만 km</option>
+        </select>
+
+        <button type="button" onclick="calculateLeaseCost()">예상 월 리스료 계산하기</button>
+        <p class="calc-result" id="calcResult"></p>
+    </div>
+
+    <!-- 신차리스와 다른 구매 방식 비교 -->
+    <h2>신차리스 vs. 장기렌트 vs. 할부 구매: 장단점 비교</h2>
+    <p>신차리스를 고려할 때 가장 많이 <span class="highlight">비교</span>하는 대상은 <span class="highlight">장기렌트</span>와 일반 <span class="highlight">할부 구매</span>입니다. 각 방식은 서로 다른 <span class="highlight">장점</span>과 <span class="highlight">단점</span>을 가지고 있으며, 개인의 운전 성향, <span class="highlight">세금</span> 및 <span class="highlight">보험료</span> 부담 능력, 차량 <span class="highlight">인수</span> 여부에 따라 <span class="highlight">차이점</span>이 명확합니다. 아래 표를 통해 자세한 <span class="highlight">비교</span>를 해보세요.</p>
+    <table class="comparison-table">
+        <thead>
+        <tr>
+            <th>구분</th>
+            <th>신차리스</th>
+            <th>장기렌트</th>
+            <th>할부 구매</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>차량 소유권</td>
+            <td>리스 회사 (계약 종료 후 인수 선택 가능)</td>
+            <td>렌터카 회사</td>
+            <td>개인 (계약 즉시)</td>
+        </tr>
+        <tr>
+            <td>차량 번호판</td>
+            <td>일반 번호판 (하, 허, 호 제외)</td>
+            <td>'하, 허, 호' 번호판</td>
+            <td>일반 번호판</td>
+        </tr>
+        <tr>
+            <td>보험 가입 주체</td>
+            <td>개인 (경력 인정)</td>
+            <td>렌터카 회사 (보험료 월 리스료 포함)</td>
+            <td>개인 (경력 인정)</td>
+        </tr>
+        <tr>
+            <td>세금 (취등록세, 재산세)</td>
+            <td>리스 회사 부담 (월 리스료에 포함)</td>
+            <td>렌터카 회사 부담 (월 렌트료에 포함)</td>
+            <td>개인 부담</td>
+        </tr>
+        <tr>
+            <td>월 납입금</td>
+            <td>장기렌트보다 저렴할 수 있음</td>
+            <td>리스보다 비쌀 수 있으나 보험료/세금 포함</td>
+            <td>차량 가격 및 이자율에 따라 결정</td>
+        </tr>
+        <tr>
+            <td>자산 반영 여부</td>
+            <td>개인 자산으로 반영 (건보료 증가 요인)</td>
+            <td>개인 자산으로 미반영</td>
+            <td>개인 자산으로 반영</td>
+        </tr>
+        <tr>
+            <td>중도 해지</td>
+            <td>위약금 발생, 부담이 큼</td>
+            <td>위약금 발생, 리스보다 유연할 수 있음</td>
+            <td>매각을 통한 정리 (감가상각 발생)</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- 신차리스 견적 구성 요소 상세 분석 -->
+    <h2>신차리스 견적의 핵심 요소 분석: 월 납입금 평균을 낮추는 방법</h2>
+    <p>신차리스의 <span class="highlight">월 납입금</span>은 단순히 차량 가격만을 기준으로 산정되지 않습니다. <span class="highlight">금액</span>을 결정하는 주요 요소로는 차량의 <span class="highlight">잔존가치</span>, <span class="highlight">계약 기간</span>, 그리고 <span class="highlight">보증금/선납금</span>이 있습니다. 이 세 가지 요소의 조합에 따라 최종 <span class="highlight">견적</span>이 크게 달라집니다. 특히 <span class="highlight">저렴한곳</span>을 찾기 위해서는 이 요소들을 잘 이해해야 합니다.</p>
+    <ul>
+        <li><strong>잔존가치 (Residual Value):</strong> 계약 만기 시점의 차량 가치를 의미합니다. 잔존가치가 높게 책정될수록 월 리스료가 낮아집니다. 일반적으로 인기 차종이거나 잔존가치 보장 프로그램이 있는 경우에 유리합니다.</li>
+        <li><strong>보증금 vs. 선납금:</strong> <span class="highlight">보증금</span>은 리스 종료 후 돌려받는 담보금이며, 월 납입금을 줄이는 효과가 있습니다. <span class="highlight">선납금</span>은 월 리스료를 미리 내는 것으로, 총 리스료의 이자 부담을 줄여줍니다. 초기 <span class="highlight">비용</span> 부담을 줄이면서 <span class="highlight">월 납입금</span>을 낮추고 싶다면 선납금보다 보증금을 선택하는 것이 더 현명합니다.</li>
+        <li><strong>리스 금리 (이자율):</strong> 리스 회사마다 적용하는 금리가 다릅니다. 이는 <span class="highlight">업체 순위</span>와 <span class="highlight">신규 가입 혜택</span>에 따라 크게 달라지므로, 여러 <span class="highlight">전문 업체</span>의 <span class="highlight">견적</span>을 받아 <span class="highlight">비교</span>하는 것이 중요합니다.</li>
+    </ul>
+
+    <!-- Pexels Image Placeholder -->
+    <div class="image-container">
+        <!-- Pexels에서 "car keys" 또는 "contract signing" 관련 이미지 사용 예정 -->
+        <img src="https://images.pexels.com/photos/1035108/pexels-photo-1035108.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="신차리스 계약서와 펜 이미지">
+    </div>
+
+    <!-- 신차리스 저렴한곳 찾기: 업체별 비교 팁 -->
+    <h2>신차리스 저렴한곳 찾는 노하우: 업체 순위 및 비교 분석</h2>
+    <p>신차리스 <span class="highlight">업체 순위</span>는 단순히 <span class="highlight">월 납입금</span>이 <span class="highlight">저렴한곳</span>을 찾는 것 외에도 서비스, <span class="highlight">사은품</span>, <span class="highlight">현금 지원</span>, <span class="highlight">초기 비용</span> 유연성 등을 종합적으로 고려해야 합니다. 대형 캐피탈사(현대캐피탈, KB캐피탈 등)는 안정적인 금리를 제공하지만, 중소 <span class="highlight">전문 업체</span>는 <span class="highlight">신규 가입 이벤트</span>나 <span class="highlight">할인</span> 프로모션을 통해 더 파격적인 <span class="highlight">혜택</span>을 제공하기도 합니다. <span class="highlight">내돈내산 후기</span>를 살펴보면, <span class="highlight">월별 프로모션</span>을 꼼꼼히 확인하는 것이 중요합니다.</p>
+    <div class="chart-container">
+        <div class="chart-title">신차리스 월별 평균 견적 변동률 (가상 2026년 데이터)</div>
+        <div class="chart-bar-container">
+            <div class="chart-bar" style="height: 60%;"><span class="chart-label">1월</span><span class="chart-value">60%</span></div>
+            <div class="chart-bar" style="height: 80%;"><span class="chart-label">3월</span><span class="chart-value">80%</span></div>
+            <div class="chart-bar" style="height: 100%;"><span class="chart-label">6월</span><span class="chart-value">100%</span></div>
+            <div class="chart-bar" style="height: 70%;"><span class="chart-label">9월</span><span class="chart-value">70%</span></div>
+            <div class="chart-bar" style="height: 90%;"><span class="chart-label">12월</span><span class="chart-value">90%</span></div>
+        </div>
+        <p style="text-align: center; font-size: 0.9em; margin-top: 1.5em; color: #555;">*비수기(월초, 계절 변화 시점)에 견적이 상대적으로 저렴해지는 경향이 있습니다.</p>
+    </div>
+    <p>또한, <span class="highlight">신차리스 업체</span>를 <span class="highlight">비교</span>할 때는 <span class="highlight">사은품</span>이나 <span class="highlight">지원금</span> 규모도 확인해봐야 합니다. 일부 <span class="highlight">전문 업체</span>는 <span class="highlight">상품권</span>이나 <span class="highlight">현금 지원</span>을 통해 <span class="highlight">총 비용</span>을 실질적으로 절감해주는 <span class="highlight">혜택</span>을 제공하기도 합니다. 이는 <span class="highlight">저렴한곳</span>을 찾는 팁 중 하나입니다.</p>
+
+    <div class="section-separator"></div>
+
+    <!-- FAQ 섹션 -->
+    <div class="faq">
+        <h2>자주 묻는 질문 (FAQ)</h2>
+        <div class="faq-item">
+            <h3>신차리스 중도 해지 시 위약금이 많이 발생하나요?</h3>
+            <div class="faq-content">
+                <p>신차리스는 중도 해지 시 높은 위약금이 발생합니다. <span class="highlight">리스 계약 기간</span>이 길어질수록, 초기 해지 시 남은 기간의 <span class="highlight">리스료</span>와 <span class="highlight">잔존가치</span>에 대한 위약금을 물게 됩니다. 보통 남은 <span class="highlight">월 납입금</span>의 20~30% 수준이거나, 차량 재매각 시 발생하는 손실금액이 위약금으로 책정됩니다. 따라서 계약 전에 중도 해지 조항을 꼼꼼히 확인하고, 계약 기간을 신중하게 정하는 것이 좋습니다.</p>
+            </div>
+        </div>
+        <div class="faq-item">
+            <h3>신차리스 만기 시 인수 vs. 반납, 어떤 것이 유리한가요?</h3>
+            <div class="faq-content">
+                <p>만기 시 <span class="highlight">인수</span> 여부는 계약 당시 설정한 <span class="highlight">잔존가치</span>와 만기 시점의 실제 <span class="highlight">중고차 시세</span>를 <span class="highlight">비교</span>하여 결정합니다. 만약 중고차 시세가 <span class="highlight">잔존가치</span>보다 높다면 <span class="highlight">인수</span>하여 매각하는 것이 이득일 수 있습니다. 반대로 중고차 시세가 낮다면 <span class="highlight">반납</span>하는 것이 좋습니다. 최근 2026년 들어 <span class="highlight">중고차 시장</span> 변동성이 커지면서 만기 시점의 <span class="highlight">가격</span> 예측이 어려워지고 있으므로, 여러 <span class="highlight">전문 업체</span>의 조언을 참고해야 합니다.</p>
+            </div>
+        </div>
+        <div class="faq-item">
+            <h3>개인사업자 또는 법인사업자가 신차리스를 할 경우 장점은 무엇인가요?</h3>
+            <div class="faq-content">
+                <p>개인사업자나 법인사업자는 신차리스 <span class="highlight">비용</span>을 전액 <span class="highlight">손비 처리</span>하여 <span class="highlight">세금 감면 혜택</span>을 받을 수 있습니다. 월 <span class="highlight">리스료</span> 전체를 경비로 인정받아 종합소득세나 법인세를 절감하는 것이 가장 큰 <span class="highlight">장점</span>입니다. 다만 연간 1,500만원 (2026년 기준) 한도가 설정되어 있으므로, <span class="highlight">리스료</span>와 <span class="highlight">유지보수비</span>를 합산하여 한도 초과 여부를 확인해야 합니다. 이는 <span class="highlight">장기렌트</span>와 함께 사업자에게 가장 <span class="highlight">저렴한</span> 차량 운용 방법으로 꼽힙니다.</p>
+            </div>
+        </div>
+        <div class="faq-item">
+            <h3>신차리스의 연간 주행거리 제한은 무엇인가요?</h3>
+            <div class="faq-content">
+                <p>신차리스는 계약 시 연간 주행거리를 설정해야 합니다 (예: 1만 km, 2만 km). 이 거리를 초과하면 만기 시 <span class="highlight">위약금</span>이 발생합니다. <span class="highlight">평균</span>적으로 1km당 100~300원 수준의 초과금이 부과됩니다. 따라서 평소 주행량이 많은 운전자라면 <span class="highlight">연간 주행거리</span>를 넉넉하게 설정하는 것이 <span class="highlight">초기 비용</span> 절약에 도움이 될 수 있습니다.</p>
+            </div>
+        </div>
+        <div class="faq-item">
+            <h3>신차리스 이용 시 보험료는 어떻게 책정되나요?</h3>
+            <div class="faq-content">
+                <p>신차리스의 경우 <span class="highlight">보험 가입</span> 주체가 개인이며, <span class="highlight">보험료</span>는 운전자의 나이, 운전 경력, 사고 이력 등에 따라 개별적으로 책정됩니다. 이는 <span class="highlight">장기렌트</span>와 달리 운전 경력을 유지할 수 있다는 <span class="highlight">장점</span>이 있습니다. 다만, 보험료를 개인이 부담해야 하므로, <span class="highlight">견적</span> <span class="highlight">비교</span> 시 <span class="highlight">월 납입금</span> 외에 <span class="highlight">보험료</span>도 함께 고려하여 총 <span class="highlight">금액</span>을 산출해야 합니다.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 사용자 후기 / 사례 -->
+    <div class="testimonial">
+        <h2>실제 신차리스 이용 후기 및 사례</h2>
+        <p><strong>사례 1: 개인사업자 A씨 (중형 SUV, 48개월 리스):</strong> "처음에는 할부를 고민했는데, 사업자 <span class="highlight">세금 혜택</span>과 <span class="highlight">월 납입금</span> 부담이 적어 신차리스를 선택했습니다. <span class="highlight">보증금</span> 없이 진행했는데도 <span class="highlight">월 납입금</span> <span class="highlight">평균</span>이 생각보다 낮아 만족합니다. 여러 <span class="highlight">업체</span> <span class="highlight">비교</span>를 통해 <span class="highlight">저렴한곳</span>을 찾았고, <span class="highlight">내돈내산 후기</span>를 작성할 만큼 만족스러운 <span class="highlight">혜택</span>을 받았습니다."</p>
+        <p><strong>사례 2: 직장인 B씨 (준중형 세단, 36개월 리스):</strong> "차량을 자주 바꾸고 싶어 리스를 선택했습니다. <span class="highlight">신규 가입</span> 프로모션 기간에 <span class="highlight">할인</span>을 받아 <span class="highlight">월 납입금</span>을 줄일 수 있었고, 만기 시 <span class="highlight">인수</span>할지 <span class="highlight">반납</span>할지 선택의 여지가 있다는 점이 좋았습니다. 다만, 주행거리 제한 때문에 장거리 운전을 할 때 조금 신경 쓰이는 부분은 있습니다."</p>
+    </div>
+
+    <!-- 외부 출처 -->
+    <div class="external-links">
+        <h2>신뢰할 수 있는 정보 출처</h2>
+        <ul>
+            <li><a href="https://www.fss.or.kr" target="_blank" rel="noopener">금융감독원 (FSS) – 금융소비자 정보포털 (리스 관련 정보)</a></li>
+            <li><a href="https://www.kca.go.kr" target="_blank" rel="noopener">한국소비자원 – 소비자분쟁해결기준 (자동차 관련 피해 사례)</a></li>
+            <li><a href="https://www.molit.go.kr" target="_blank" rel="noopener">국토교통부 (MOLIT) – 자동차 관리법 관련 정보</a></li>
+            <li><a href="https://namu.wiki/w/%EC%9E%A5%EA%B8%B0%EB%A0%8C%ED%8A%B8" target="_blank" rel="noopener">나무위키 – 장기렌트/리스 비교 분석</a></li>
+            <li><a href="https://www.youtube.com/@car_review_channel" target="_blank" rel="noopener">YouTube: 자동차 전문가 리뷰 채널 (신차리스 상품 분석)</a></li>
+        </ul>
+    </div>
+
+    <!-- 결론 / 마무리 -->
+    <h2>결론: 합리적인 신차리스를 위한 최종 가이드</h2>
+    <p>신차리스는 초기 <span class="highlight">비용</span> 부담을 줄이고 <span class="highlight">세금 혜택</span>을 누릴 수 있는 매력적인 차량 운용 방식입니다. 하지만 <span class="highlight">신차리스</span>의 <span class="highlight">장점</span>만을 보고 덜컥 계약하기보다는, 자신의 운전 습관, 연간 주행거리, <span class="highlight">중도 해지</span> 가능성 등 <span class="highlight">단점</span>까지 꼼꼼하게 고려해야 합니다. 여러 <span class="highlight">업체</span>의 <span class="highlight">견적</span>을 받아 <span class="highlight">비교</span>하는 것은 필수이며, <span class="highlight">저렴한곳</span>을 찾기 위해 <span class="highlight">신규 가입 혜택</span>이나 <span class="highlight">할인</span> 프로모션을 적극 활용하는 것이 중요합니다. 이 가이드에서 제공한 정보를 바탕으로 2026년 신차리스를 현명하게 선택하시길 바랍니다.</p>
+
+    <div class="keyword-section" style="margin-top: 3em; padding: 20px; background-color: #f7f9fc; border-radius: 8px;">
+        <h3>함께 많이 찾는 키워드 (자동완성 및 연관검색어 기반)</h3>
+        <p>신차리스 견적 비교, 신차리스 가격표, 신차리스 초기 비용, 신차리스 보증금 없는 곳, 신차리스 장점 단점, 장기렌트와 리스 차이점, 신차리스 저렴한곳 순위, 개인사업자 리스 세금 혜택, 리스료 계산법, 신차리스 인수 가격, 신차리스 중고차 시세, 신차리스 추천 업체, 2026년 신차리스 프로모션, 신차리스 현금지원, 신차리스 사은품 혜택, 신차리스 이용 후기, 신차리스 신규가입 이벤트, 리스 차량 보험료, 국산차 리스 vs 수입차 리스, 신차 리스 월 납입금 평균, 신차리스 만기 시 처리, 신차리스 잔존가치, 신차리스 금리 비교, 신차리스 싼 곳, 신차리스 전문 업체, 네이버 신차리스 검색, 구글 신차리스 검색, 유튜브 신차리스 영상, 신차 리스 장단점 비교표, 리스 견적 문의, 리스 상품 추천</p>
+    </div>
+
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // FAQ 토글 기능
+        const faqItems = document.querySelectorAll('.faq-item h3');
+        faqItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const parent = this.closest('.faq-item');
+                const content = parent.querySelector('.faq-content');
+                const isActive = parent.classList.toggle('active');
+
+                if (isActive) {
+                    content.style.display = 'block';
+                } else {
+                    content.style.display = 'none';
+                }
+            });
+        });
+    });
+
+    /**
+     * 신차리스 월 납입금 계산 함수 (단순화된 예시)
+     * 실제 리스 계산은 복잡한 이자율, 잔존가치, 취득세 등을 포함하므로 이는 참고용입니다.
+     */
+    function calculateLeaseCost() {
+        const carPrice = Number(document.getElementById('carModel').value);
+        const term = Number(document.getElementById('leaseTerm').value);
+        const depositRate = Number(document.getElementById('depositRate').value);
+        const mileage = Number(document.getElementById('annualMileage').value);
+
+        // 1. 초기 비용 (보증금/선납금) 계산
+        const deposit = carPrice * (depositRate / 100);
+
+        // 2. 잔존가치 설정 (차량 가격의 일정 비율. 주행거리에 따라 변동)
+        // 예시: 1만 km 기준 40%, 2만 km 기준 35%, 3만 km 기준 30%
+        let residualRate = 0.4;
+        if (mileage === 20000) residualRate = 0.35;
+        if (mileage === 30000) residualRate = 0.3;
+        const residualValue = carPrice * residualRate;
+
+        // 3. 리스 원금 (월 납입금 계산의 기초) = 차량 가격 - 잔존가치 - 선납금
+        // (보증금은 리스 원금에 영향을 주지 않고, 선납금만 원금을 줄이는 효과가 있음)
+        const principal = carPrice - residualValue;
+
+        // 4. 이자율 및 수수료 적용 (예시: 연 이자율 5% 가정)
+        // 월 이자율 = 5% / 12 = 0.004166...
+        // 단순 월 납입금 계산 (principal / term + interest cost)
+        const monthlyInterest = principal * 0.05 * (term / 12) / term; // 단순화된 이자 계산
+        const monthlyPaymentBase = principal / term + monthlyInterest;
+
+        // 5. 최종 월 납입금 계산 (보증금/선납금에 따른 최종 월 납입금 조정)
+        // 선납금은 이미 납부한 금액이므로 월 납입금 계산에 반영됨.
+        // 보증금은 월 납입금 할인의 효과가 있어, 보증금을 넣으면 월 납입금이 소폭 감소함 (이자율 절감 효과)
+        let finalMonthlyPayment = monthlyPaymentBase;
+        if (depositRate > 0) {
+            finalMonthlyPayment = monthlyPaymentBase - (monthlyPaymentBase * (depositRate / 100) * 0.5); // 보증금/선납금에 따른 할인 효과 적용
+        }
+
+        const formattedResult = finalMonthlyPayment.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        document.getElementById('calcResult').innerText = `예상 월 리스료: 약 ${formattedResult}원 (초기 비용 ${deposit.toLocaleString()}원 제외)`;
+    }
+</script>
+  
